@@ -1,6 +1,21 @@
 <template>
   <div>
-    <label class="form-label">{{ title }}</label>
+    <label class="form-label">{{ title }}
+      <transition appear
+        enter-active-class="animate__animated animate__fadeIn"
+      >
+      <template v-if="activated">
+        <transition
+          mode="out-in"
+          enter-active-class="animate__animated animate__flipInY"
+          leave-active-class="animate__animated animate__flipOutY"
+        >
+          <b-icon-check-circle class="text-success" v-if="valid"/>
+          <b-icon-exclamation-circle class="text-danger" v-else/>
+        </transition>
+      </template>
+      </transition>
+    </label>
     <input type="text" class="form-control"
            @input="onInputMy($event.target.value)"
            :value="value"
@@ -13,7 +28,12 @@
 </template>
 
 <script>
+import {BIconCheckCircle, BIconExclamationCircle} from 'bootstrap-icons-vue';
+
 export default {
+  components: {
+    BIconCheckCircle, BIconExclamationCircle
+  },
   props: {
     title: {type: String, required: true},
     value: {type: String, required: true},
@@ -23,7 +43,7 @@ export default {
     input: null,
     onmychange: true
   },
-  data(){
+  data() {
     return {
       activated: !!this.value
     }
@@ -31,7 +51,7 @@ export default {
   methods: {
     onInputMy(val) {
       this.activated = true;
-      this.$emit('input',val);
+      this.$emit('input', val);
     }
   }
 }
