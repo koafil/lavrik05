@@ -20,31 +20,32 @@
   </template>
   <h2 v-else>All done</h2>
 
-  <vue-final-modal v-model="showDialog" classes="modal d-block" content-class="modal-dialog ">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Data is correct?</h5>
-        <button type="button" class="btn-close" @click="showDialog=false"></button>
+  <transition name="dialog" >
+    <vue-final-modal v-model="showDialog" classes="modal d-block" content-class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Data is correct?</h5>
+          <button type="button" class="btn-close" @click="showDialog=false"></button>
+        </div>
+        <div class="modal-body">
+          <table>
+            <tbody>
+            <tr
+              v-for="(field, i) in info"
+            >
+              <th>{{ field.label }}</th>
+              <td>{{ field.value }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" @click="showDialog=false">Canel</button>
+          <button type="button" class="btn btn-primary" @click="showDialog=false; allDone=true;">Ok</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <table>
-          <tbody>
-          <tr
-            v-for="(field, i) in info"
-          >
-            <th>{{ field.label }}</th>
-            <td>{{ field.value }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" @click="showDialog=false">Canel</button>
-        <button type="button" class="btn btn-primary" @click="showDialog=false; allDone=true;">Ok</button>
-      </div>
-    </div>
-  </vue-final-modal>
-
+    </vue-final-modal>
+  </transition>
 </template>
 <script>
 import AppField from './components/AppField'
@@ -124,4 +125,35 @@ export default {
   overflow: auto;
   background-color: #d7ecf3;
 }
+
+.dialog-enter-active {
+  animation: dialogIn 1.2s;
+}
+
+.dialog-leave-active {
+  animation: dialogOut 1.2s;
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dialogOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}
+
 </style>
