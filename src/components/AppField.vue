@@ -1,15 +1,16 @@
 <template>
   <div>
-    <label class="form-label">{{ title }}
-      <transition appear
-                  name="fade"
+    <label class="form-label">
+      {{ title }}
+      <transition
+        v-if="activated"
+        appear
+        appear-class="fade-enter-active"
+        name="rotate"
+        mode="out-in"
       >
-        <span v-if="activated">
-          <transition name="rotate" mode="out-in">
-            <b-icon-check-circle class="text-success" v-if="valid" />
-            <b-icon-exclamation-circle class="text-danger" v-else />
-          </transition>
-        </span>
+        <b-icon-check-circle class="text-success" v-if="valid" />
+        <b-icon-exclamation-circle class="text-danger" v-else />
       </transition>
     </label>
     <input type="text" class="form-control"
