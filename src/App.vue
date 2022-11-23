@@ -20,8 +20,16 @@
   </template>
   <h2 v-else>All done</h2>
 
-  <transition name="dialog" >
-    <vue-final-modal v-model="showDialog" classes="modal d-block" content-class="modal-dialog ">
+    <vue-final-modal
+      v-model="showDialog"
+      classes="modal d-block"
+      content-class="modal-dialog "
+      overlay-transition=""
+      :transition="{
+       'enter-active-class': 'dialog-enter-active',
+      'leave-active-class': 'dialog-leave-active'
+      }"
+    >
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Data is correct?</h5>
@@ -45,7 +53,6 @@
         </div>
       </div>
     </vue-final-modal>
-  </transition>
 </template>
 <script>
 import AppField from './components/AppField'
@@ -67,22 +74,22 @@ export default {
         },
         {
           label: 'Phone',
-          value: '123',
+          value: '123456789',
           pattern: /^[0-9]{7,14}$/
         },
         {
           label: 'Email',
-          value: '',
+          value: 'a',
           pattern: /.+/
         },
         {
           label: 'Some Field 1',
-          value: '',
+          value: 'a',
           pattern: /.+/
         },
         {
           label: 'Some Field 2',
-          value: '',
+          value: 'a',
           pattern: /.+/
         }
       ]
@@ -127,17 +134,17 @@ export default {
 }
 
 .dialog-enter-active {
-  animation: dialogIn 1.2s;
+  animation: dialogIn 0.2s;
 }
 
 .dialog-leave-active {
-  animation: dialogOut 1.2s;
+  animation: dialogOut 0.2s;
 }
 
 @keyframes dialogIn {
   from {
     opacity: 0;
-    transform: translateY(-100px);
+    transform: translateY(-1000px);
   }
   to {
     opacity: 1;
@@ -147,12 +154,12 @@ export default {
 
 @keyframes dialogOut {
   from {
-    opacity: 1;
+    /*opacity: 1;*/
     transform: translateY(0);
   }
   to {
-    opacity: 0;
-    transform: translateY(100px);
+    /*opacity: 0;*/
+    transform: translateY(1000px);
   }
 }
 
